@@ -5,23 +5,41 @@
 <title>Checklist Ambulâncias</title>
 
 <style>
-
+  
 body{
 font-family: Arial;
 margin:0;
 background:#eaeaea;
 }
 
-.background{
-
+/* Altere a parte da .background para esta: */
+.background {
 background-image: url("logo_hospam.PNG");
-background-size:cover;
-background-position:center;
-background-repeat:no-repeat;
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+min-height: 100vh;
+padding: 20px;
+}
 
-min-height:100vh;
-padding:20px;
+/* ESTA É A PARTE NOVA: Remove a logo quando o checklist aparecer */
+body:has(.checklist-box) .background {
+background-image: none !important;
+background-color: white !important;
+}
 
+/* Ajuste na regra de impressão para garantir fundo limpo no papel */
+@media print {
+.print-btn, .ambulancia-box {
+display: none;
+}
+.background {
+background-image: none !important;
+padding: 0;
+}
+.checklist-box {
+border: none; /* Opcional: remove a borda na impressão se preferir */
+}
 }
 .login-box,.ambulancia-box,.checklist-box{
 max-width:1200px;
