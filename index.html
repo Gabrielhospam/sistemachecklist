@@ -5,96 +5,103 @@
 <title>Checklist Ambulâncias</title>
 
 <style>
-  
-body{
+body {
 font-family: Arial;
-margin:0;
-background:#eaeaea;
+margin: 0;
+background: #eaeaea;
 }
 
-.background{
-
+/* 1. A logo agora só aparece se NÃO houver um checklist na página */
+body:not(:has(.checklist-box)) .background {
 background-image: url("logo_hospam.PNG");
-background-size:cover;
-background-position:center;
-background-repeat:no-repeat;
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+min-height: 100vh;
+padding: 20px;
+}
 
-min-height:100vh;
-padding:20px;
-
-  /* ESTA É A PARTE NOVA: Remove a logo quando o checklist aparecer */
+/* 2. Se for a tela de checklist, removemos a imagem e limpamos o fundo */
 body:has(.checklist-box) .background {
 background-image: none !important;
 background-color: white !important;
+min-height: 100vh;
+padding: 20px;
 }
 
-/* Ajuste na regra de impressão para garantir fundo limpo no papel */
+/* 3. Efeito Turvo (Blur) apenas na Login Box e Ambulância Box */
+.login-box, .ambulancia-box {
+max-width: 1200px;
+margin: auto;
+padding: 20px;
+border: 1px solid black;
+/* Efeito de vidro: fundo semi-transparente e desfoque */
+background: rgba(255, 255, 255, 0.7) !important;
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+}
+
+/* 4. Checklist Box fica com fundo sólido para leitura e impressão */
+.checklist-box {
+max-width: 1200px;
+margin: auto;
+background: white;
+padding: 20px;
+border: 1px solid black;
+}
+
+h1 {
+text-align: center;
+margin-bottom: 10px;
+}
+
+table {
+width: 100%;
+border-collapse: collapse;
+font-size: 12px;
+}
+
+th, td {
+border: 1px solid black;
+padding: 4px;
+}
+
+th {
+background: #f0f0f0;
+}
+
+.section {
+background: #d9d9d9;
+font-weight: bold;
+}
+
+.center {
+text-align: center;
+}
+
+.falta {
+background: #ffb3b3;
+}
+
+.print-btn {
+margin-top: 15px;
+text-align: center;
+}
+
 @media print {
+/* Garante que nada de fundo saia na impressão */
 .print-btn, .ambulancia-box {
 display: none;
 }
 .background {
 background-image: none !important;
+background-color: white !important;
 padding: 0;
 }
 .checklist-box {
-border: none; /* Opcional: remove a borda na impressão se preferir */
+border: 1px solid black;
 }
 }
-}
-.login-box,.ambulancia-box,.checklist-box{
-max-width:1200px;
-margin:auto;
-background:transparent;
-padding:20px;
-border:1px solid black;
-backdrop-filter: blur(10px);.
-}
-
-h1{
-text-align:center;
-margin-bottom:10px;
-}
-
-table{
-width:100%;
-border-collapse:collapse;
-font-size:12px;
-}
-
-th,td{
-border:1px solid black;
-padding:4px;
-}
-
-th{
-background:#f0f0f0;
-}
-
-.section{
-background:#d9d9d9;
-font-weight:bold;
-}
-
-.center{
-text-align:center;
-}
-
-.falta{
-background:#ffb3b3;
-}
-
-.print-btn{
-margin-top:15px;
-text-align:center;
-}
-
-@media print{
-.print-btn,.ambulancia-box{
-display:none;
-}
-}
-
 </style>
 
 <script>
