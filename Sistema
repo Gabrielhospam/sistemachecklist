@@ -13,12 +13,16 @@ background:#eaeaea;
 }
 
 .background{
-/* espaço para imagem futura */
+
+background-image: url("logo_hospam");
 background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+
 min-height:100vh;
 padding:20px;
-}
 
+}
 .login-box,.ambulancia-box,.checklist-box{
 max-width:1200px;
 margin:auto;
