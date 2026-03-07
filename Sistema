@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Checklist Ambulâncias</title>
+
+<style>
+
+body{
+font-family: Arial;
+margin:0;
+background:#eaeaea;
+}
+
+.background{
+/* espaço para imagem futura */
+background-size:cover;
+min-height:100vh;
+padding:20px;
+}
+
+.login-box,.ambulancia-box,.checklist-box{
+max-width:1200px;
+margin:auto;
+background:white;
+padding:20px;
+border:1px solid black;
+}
+
+h1{
+text-align:center;
+margin-bottom:10px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+font-size:12px;
+}
+
+th,td{
+border:1px solid black;
+padding:4px;
+}
+
+th{
+background:#f0f0f0;
+}
+
+.section{
+background:#d9d9d9;
+font-weight:bold;
+}
+
+.center{
+text-align:center;
+}
+
+.falta{
+background:#ffb3b3;
+}
+
+.print-btn{
+margin-top:15px;
+text-align:center;
+}
+
+@media print{
+.print-btn,.ambulancia-box{
+display:none;
+}
+}
+
+</style>
+
+<script>
+
+/* PROFISSIONAIS */
+
+const profissionais=[
+{nome:"João Gabriel da Silva",coren:"2324313",nascimento:"21012006"}
+];
+
+
+/* IDENTIFICA TIPO */
+
+function tipoAmbulancia(nome){
+
+nome=nome.toUpperCase()
+
+if(nome.includes("UTI")) return "UTI"
+if(nome.includes("USB")) return "USB"
+if(nome.includes("FIORINO")) return "FIORINO"
+
+return null
+
+}
+
+
+/* LOGIN */
+
+function login(){
+
+const coren=document.getElementById("coren").value
+const nasc=document.getElementById("nascimento").value
+
+const prof=profissionais.find(p=>p.coren===coren && p.nascimento===nasc)
+
+if(!prof){
+
+alert("Login inválido")
+return
+
+}
+
+document.getElementById("loginBox").style.display="none"
+document.getElementById("ambulanciaBox").style.display="block"
+
+document.getElementById("responsavel").value=
+prof.nome+" - COREN "+prof.coren
+
+document.getElementById("data").value=
+new Date().toLocaleDateString("pt-BR")
+
+document.getElementById("horaInicio").value=
+new Date().toLocaleTimeString("pt-BR")
+
+}
+
+
+/* SELECIONAR AMBULÂNCIA */
+
+function selecionarAmbulancia(){
+
+const amb=document.getElementById("ambulancia").value
+
+if(!amb){
+
+alert("Selecione a ambulância")
+return
+
+}
+
+document.getElementById("ambulanciaNome").value=amb
+
+document.getElementById("ambulanciaBox").style.display="none"
+
+document.getElementById("checklist").style.display="block"
+
+montarChecklist()
+
+}
+
+
+/* CRIAR LINHA */
+
+function linha(item,qtd){
+
+return `
+<tr>
+<td>${item}</td>
+<td class="center">${qtd}</td>
+<td class="center"><input type="number" style="width:45px" oninput="verificar(this,${qtd})"></td>
+<td class="center"><input type="checkbox"></td>
+<td><input class="obs" style="width:100%"></td>
+</tr>
+`
+
+}
+
+
+/* ALERTA FALTA */
+
+function verificar(input,padrao){
+
+const tr=input.closest("tr")
+
+const obs=tr.querySelector(".obs")
+
+const valor=parseInt(input.value)
+
+if(!isNaN(valor) && valor<padrao){
+
+tr.classList.add("falta")
+
+obs.value="REPOR"
+
+}else{
+
+tr.classList.remove("falta")
+
+obs.value=""
+
+}
+
+}
+
+
+/* MONTAR CHECKLIST */
+
+function montarChecklist(){
+
+const amb=document.getElementById("ambulanciaNome").value
+
+const tipo=tipoAmbulancia(amb)
+
+const corpo=document.getElementById("corpoChecklist")
+
+corpo.innerHTML=""
+
+function secao(nome){
+
+corpo.innerHTML+=`<tr class="section"><td colspan="5">${nome}</td></tr>`
+
+}
+
+
+/* UTI */
+
+if(tipo==="UTI"){
+
+secao("EQUIPAMENTOS E SUPORTE")
+
+corpo.innerHTML+=linha("Esfigmomanômetro Adulto",1)
+corpo.innerHTML+=linha("Esfigmomanômetro Pediátrico",1)
+corpo.innerHTML+=linha("Estetoscópio Adulto/Pediátrico",1)
+corpo.innerHTML+=linha("Lanterna",1)
+corpo.innerHTML+=linha("Termômetro Digital",1)
+corpo.innerHTML+=linha("Óculos de Proteção",1)
+corpo.innerHTML+=linha("Dispenser Álcool",1)
+corpo.innerHTML+=linha("Kit Limpeza",1)
+corpo.innerHTML+=linha("Suporte de Soro",1)
+corpo.innerHTML+=linha("Sacolas p/lixo comum",5)
+corpo.innerHTML+=linha("Sacolas p/lixo contaminado",5)
+
+secao("RESTRITO A USA")
+
+corpo.innerHTML+=linha("Bomba de Infusão Continua (BIC)",2)
+corpo.innerHTML+=linha("Monitor Multiparametrico",1)
+corpo.innerHTML+=linha("Desfibrilador Externo Automático (DEA)",1)
+corpo.innerHTML+=linha("Ventilador Mecânico",1)
+corpo.innerHTML+=linha("Kendrick Extrication Device (KED) UTI MAIS VIDA",1)
+corpo.innerHTML+=linha("Aspirador Portátil",1)
+corpo.innerHTML+=linha("Aspirador de parede",1)
+
+secao("VIAS AÉREAS / OXIGENOTERAPIA")
+
+corpo.innerHTML+=linha("Bolsa Válvula Máscara (BVM) Adulto",1)
+corpo.innerHTML+=linha("Bolsa Válvula Máscara (BVM) Pediátrico",1)
+corpo.innerHTML+=linha("Bolsa Válvula Máscara (BVM) Neonatal",1)
+corpo.innerHTML+=linha("Máscara Venturi",1)
+corpo.innerHTML+=linha("Máscara não reinalante",1)
+corpo.innerHTML+=linha("Kit Laringoscópio 1 a 4",1)
+corpo.innerHTML+=linha("Kit Laringoscópio Neo 00/01/02/03",1)
+corpo.innerHTML+=linha("Cânula Orofaringea (Guedel) 01-05",1)
+corpo.innerHTML+=linha("Máscara Nebulização",1)
+corpo.innerHTML+=linha("Máscara Laríngea (1)",1)
+corpo.innerHTML+=linha("Máscara Laríngea (1.5)",1)
+corpo.innerHTML+=linha("Máscara Laríngea (2)",1)
+corpo.innerHTML+=linha("Máscara Laríngea (2,5)",2)
+corpo.innerHTML+=linha("Máscara Laríngea (3)",2)
+corpo.innerHTML+=linha("Tubo Endotraqueal (5.0)",2)
+corpo.innerHTML+=linha("Tubo Endotraqueal (7.0)",2)
+corpo.innerHTML+=linha("Tubo Endotraqueal (7,5)",2)
+corpo.innerHTML+=linha("Tubo Endotraqueal (9.0)",2)
+corpo.innerHTML+=linha("Tubo Endotraqueal (9.5)",2)
+corpo.innerHTML+=linha("Cateter Nasal",2)
+corpo.innerHTML+=linha("Copo de Aspiração",1)
+corpo.innerHTML+=linha("Sonda Aspiração Traqueal (10)",2)
+corpo.innerHTML+=linha("Sonda Aspiração Traqueal (14)",2)
+corpo.innerHTML+=linha("Sonda nasogástrica (8 FR)",2)
+corpo.innerHTML+=linha("Cilindro O2 + válvula",1)
+corpo.innerHTML+=linha("Cilindro O2 para transporte + válvula",1)
+corpo.innerHTML+=linha("Fluxômetro",1)
+corpo.innerHTML+=linha("Umidificador",1)
+corpo.innerHTML+=linha("Manômetro",2)
+corpo.innerHTML+=linha("Buggie",1)
+
+secao("MEDICAÇÕES")
+
+corpo.innerHTML+=linha("Atropina",5)
+corpo.innerHTML+=linha("Dopamina",2)
+corpo.innerHTML+=linha("Aminofilina",2)
+corpo.innerHTML+=linha("Dobutamina",2)
+corpo.innerHTML+=linha("Hidrocortisona 100mg",2)
+corpo.innerHTML+=linha("Hidrocortisona 500mg",2)
+corpo.innerHTML+=linha("Glicose 50%",20)
+corpo.innerHTML+=linha("Glicose 5% 250ml",3)
+corpo.innerHTML+=linha("Soro Fisiológico 0,9% 250ml",3)
+corpo.innerHTML+=linha("Soro Fisiológico 0,9% 500ml",3)
+corpo.innerHTML+=linha("Soro Ringer Lactato 500ml",3)
+corpo.innerHTML+=linha("Água Destilada 10ml",50)
+corpo.innerHTML+=linha("Metoclopramida",2)
+corpo.innerHTML+=linha("Dipirona",2)
+corpo.innerHTML+=linha("Buscopan Simples",2)
+corpo.innerHTML+=linha("Buscopan Composto",2)
+corpo.innerHTML+=linha("Dinitrato de Isossorbitol",5)
+corpo.innerHTML+=linha("Furosemida",10)
+corpo.innerHTML+=linha("Amiodarona",5)
+corpo.innerHTML+=linha("Deslanosídeo",2)
+corpo.innerHTML+=linha("Fenitoína",5)
+corpo.innerHTML+=linha("Midazolam",4)
+corpo.innerHTML+=linha("Fentanila",1)
+corpo.innerHTML+=linha("Cetamina",1)
+corpo.innerHTML+=linha("Suxametônio",1)
+
+secao("INSUMOS E MATERIAIS")
+
+corpo.innerHTML+=linha("Seringa 1ml",5)
+corpo.innerHTML+=linha("Seringa 3ml",5)
+corpo.innerHTML+=linha("Seringa 5ml",5)
+corpo.innerHTML+=linha("Seringa 10ml",10)
+corpo.innerHTML+=linha("Seringa 20ml",10)
+corpo.innerHTML+=linha("Luva de Procedimento",1)
+corpo.innerHTML+=linha("Luva Estéril (7.0)",1)
+corpo.innerHTML+=linha("Luva Estéril (7.5)",1)
+corpo.innerHTML+=linha("Luva Estéril (8.0)",1)
+corpo.innerHTML+=linha("Gaze Estéril",20)
+corpo.innerHTML+=linha("Algodão",1)
+corpo.innerHTML+=linha("Álcool Almotolia",2)
+corpo.innerHTML+=linha("Clorexidina Almotolia",1)
+corpo.innerHTML+=linha("Esparadrapo",1)
+corpo.innerHTML+=linha("Eletrodo Descartável",100)
+corpo.innerHTML+=linha("Máscara Descartável",1)
+corpo.innerHTML+=linha("Avental Descartável",1)
+corpo.innerHTML+=linha("Cobertor / Filme Metálico",1)
+}
+
+
+/* USB */
+
+if(tipo==="USB"){
+
+secao("INSUMOS")
+
+corpo.innerHTML+=linha("Seringa 10ml",10)
+corpo.innerHTML+=linha("Seringa 20ml",10)
+corpo.innerHTML+=linha("Luva Procedimento",1)
+corpo.innerHTML+=linha("Gaze Estéril",20)
+
+secao("EQUIPAMENTOS")
+
+corpo.innerHTML+=linha("Esfigmomanômetro Adulto",1)
+corpo.innerHTML+=linha("Estetoscópio",1)
+corpo.innerHTML+=linha("Termômetro",1)
+
+}
+
+
+/* FIORINO */
+
+if(tipo==="FIORINO"){
+
+secao("EQUIPAMENTOS")
+
+corpo.innerHTML+=linha("Maca",1)
+corpo.innerHTML+=linha("Cilindro de O2",1)
+corpo.innerHTML+=linha("Suporte para soro",1)
+
+}
+
+}
+
+
+/* IMPRIMIR */
+
+function imprimir(){
+
+document.getElementById("horaFinal").value=
+new Date().toLocaleTimeString("pt-BR")
+
+window.print()
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div class="background">
+
+<div class="login-box" id="loginBox">
+
+<h1>LOGIN PROFISSIONAL</h1>
+
+COREN<br>
+<input id="coren">
+
+<br><br>
+
+Nascimento<br>
+<input id="nascimento" type="password">
+
+<br><br>
+
+<button onclick="login()">ENTRAR</button>
+
+</div>
+
+
+<div class="ambulancia-box" id="ambulanciaBox" style="display:none">
+
+<h1>SELECIONAR AMBULÂNCIA</h1>
+
+<select id="ambulancia">
+
+<option value="">--Selecione--</option>
+<option>UTI Mais Vida</option>
+<option>UTI HOSPAM 01</option>
+<option>UTI HOSPAM 02</option>
+<option>SAFETY USB</option>
+<option>USB HOSPAM</option>
+<option>Fiorino</option>
+
+</select>
+
+<br><br>
+
+<button onclick="selecionarAmbulancia()">Abrir Check-list</button>
+
+</div>
+
+
+<div class="checklist-box" id="checklist" style="display:none">
+
+<h1>CHECKLIST AMBULÂNCIA</h1>
+
+Responsável
+<input id="responsavel" readonly style="width:400px;">
+Ambulância
+<input id="ambulanciaNome" readonly>
+
+Data
+<input id="data" readonly>
+
+<br><br>
+
+Hora Inicial
+<input id="horaInicio" readonly>
+
+Hora Final
+<input id="horaFinal" readonly>
+
+<br><br>
+
+<table>
+
+<tr>
+<th>Item</th>
+<th>Qtd</th>
+<th>Conferido</th>
+<th>OK</th>
+<th>Observação</th>
+</tr>
+
+<tbody id="corpoChecklist"></tbody>
+
+</table>
+
+<div class="print-btn">
+
+<button onclick="imprimir()">IMPRIMIR</button>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
