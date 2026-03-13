@@ -137,8 +137,9 @@ document.getElementById("ambulanciaNome").value=amb
 
 document.getElementById("ambulanciaBox").style.display="none"
 
-document.getElementById("tipoChecklist").style.display="block"
+document.getElementById("checklist").style.display="block"
 
+montarChecklist()
 
 }
 
@@ -204,64 +205,6 @@ function secao(nome){
 corpo.innerHTML+=`<tr class="section"><td colspan="5">${nome}</td></tr>`
 
 }
-
-/* ABRIR CHECKLIST COMPLETO */
-
-function abrirChecklistCompleto(){
-
-document.getElementById("tipoChecklist").style.display="none"
-
-document.getElementById("checklist").style.display="block"
-
-montarChecklist()
-
-}
-
-/* ABRIR CHECKLIST URGENTE */
-
-function abrirChecklistUrgente(){
-
-document.getElementById("tipoChecklist").style.display="none"
-
-document.getElementById("checklist").style.display="block"
-
-montarChecklistUrgente()
-
-}
-
-
-/* CHECKLIST URGENTE */
-
-function montarChecklistUrgente(){
-
-const corpo=document.getElementById("corpoChecklist")
-
-corpo.innerHTML=""
-
-function secao(nome){
-
-corpo.innerHTML+=`<tr class="section"><td colspan="5">${nome}</td></tr>`
-
-}
-
-secao("EQUIPAMENTOS")
-
-corpo.innerHTML+=linha("Desfibrilador Externo Automático - DEA",1)
-corpo.innerHTML+=linha("Monitor",1)
-corpo.innerHTML+=linha("Bomba de Infusão Contínua - BIC",2)
-corpo.innerHTML+=linha("Aspirador Portátil",1)
-corpo.innerHTML+=linha("Ventilador Mecânico",1)
-corpo.innerHTML+=linha("Eletrocardiograma",1)
-
-secao("MATERIAL DE SSVV")
-
-corpo.innerHTML+=linha("Esfigmomanômetro",1)
-corpo.innerHTML+=linha("Estetoscópio",1)
-corpo.innerHTML+=linha("Oxímetro",1)
-corpo.innerHTML+=linha("Termômetro",1)
-
-}
-
 
 
 /* UTI */
@@ -481,24 +424,6 @@ Nascimento<br>
 <br><br>
 
 <button onclick="selecionarAmbulancia()">Abrir Check-list</button>
-
-</div>
-
-  </div>
-
-<div id="tipoChecklist" style="display:none;text-align:center;margin-top:20px;background:white;padding:20px;border:1px solid black;max-width:1200px;margin:auto;">
-
-<h2>Tipo de Check-list</h2>
-
-<br>
-
-<button onclick="abrirChecklistCompleto()" style="padding:10px 20px;font-size:16px;">
-Check-list Completo
-</button>
-
-<button onclick="abrirChecklistUrgente()" style="padding:10px 20px;font-size:16px;margin-left:20px;">
-Check-list Urgente
-</button>
 
 </div>
 
