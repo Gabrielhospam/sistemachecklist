@@ -11,7 +11,6 @@ margin: 0;
 background: #eaeaea;
 }
 
-/* A logo volta para a classe background como padrão */
 .background {
 background-image: url("logo_hospam.PNG");
 background-size: cover;
@@ -21,7 +20,6 @@ min-height: 100vh;
 padding: 20px;
 }
 
-/* Efeito Turvo (Blur) na Login Box para não atrapalhar a visão */
 .login-box, .ambulancia-box {
 max-width: 1200px;
 margin: auto;
@@ -32,18 +30,16 @@ backdrop-filter: blur(8px);
 -webkit-backdrop-filter: blur(8px);
 }
 
-/* A MÁGICA: Se houver um checklist, o fundo branco "atropela" a logo */
 .checklist-box {
 max-width: 1200px;
 margin: auto;
-background: white !important; /* Fundo branco sólido */
+background: white !important;
 padding: 20px;
 border: 1px solid black;
 position: relative;
 z-index: 1;
 }
 
-/* Garante que o fundo da página fique branco quando entrar no checklist */
 body:has(.checklist-box), .checklist-box {
 background-color: white !important;
 }
@@ -59,7 +55,6 @@ th { background: #f0f0f0; }
 
 @media print {
 .print-btn, .ambulancia-box { display: none; }
-/* Remove a logo na marra na hora de imprimir */
 .background { background-image: none !important; background-color: white !important; }
 }
 </style>
@@ -137,9 +132,8 @@ document.getElementById("ambulanciaNome").value=amb
 
 document.getElementById("ambulanciaBox").style.display="none"
 
-document.getElementById("checklist").style.display="block"
-
-montarChecklist()
+/* NOVA TELA */
+document.getElementById("tipoChecklist").style.display="block"
 
 }
 
@@ -188,7 +182,62 @@ obs.value=""
 }
 
 
-/* MONTAR CHECKLIST */
+/* ABRIR CHECKLIST COMPLETO */
+
+function abrirChecklistCompleto(){
+
+document.getElementById("tipoChecklist").style.display="none"
+document.getElementById("checklist").style.display="block"
+
+montarChecklist()
+
+}
+
+
+/* CHECKLIST URGENTE */
+
+function abrirChecklistUrgente(){
+
+document.getElementById("tipoChecklist").style.display="none"
+document.getElementById("checklist").style.display="block"
+
+montarChecklistUrgente()
+
+}
+
+
+function montarChecklistUrgente(){
+
+const corpo=document.getElementById("corpoChecklist")
+
+corpo.innerHTML=""
+
+function secao(nome){
+
+corpo.innerHTML+=`<tr class="section"><td colspan="5">${nome}</td></tr>`
+
+}
+
+secao("EQUIPAMENTOS")
+
+corpo.innerHTML+=linha("Desfibrilador Externo Automático - DEA",1)
+corpo.innerHTML+=linha("Monitor",1)
+corpo.innerHTML+=linha("Bomba de Infusão Contínua - BIC",2)
+corpo.innerHTML+=linha("Aspirador Portátil",1)
+corpo.innerHTML+=linha("Ventilador Mecânico",1)
+corpo.innerHTML+=linha("Eletrocardiograma",1)
+
+secao("MATERIAL DE SSVV")
+
+corpo.innerHTML+=linha("Esfigmomanômetro",1)
+corpo.innerHTML+=linha("Estetoscópio",1)
+corpo.innerHTML+=linha("Oxímetro",1)
+corpo.innerHTML+=linha("Termômetro",1)
+
+}
+
+
+/* MONTAR CHECKLIST ORIGINAL */
 
 function montarChecklist(){
 
@@ -206,7 +255,7 @@ corpo.innerHTML+=`<tr class="section"><td colspan="5">${nome}</td></tr>`
 
 }
 
-
+}
 /* UTI */
 
 if(tipo==="UTI"){
