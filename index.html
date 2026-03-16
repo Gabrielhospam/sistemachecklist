@@ -66,43 +66,7 @@ th { background: #f0f0f0; }
 
 
 <script>
-  
-function imprimir(){
 
-document.getElementById("horaFinal").value =
-new Date().toLocaleTimeString("pt-BR")
-
-let dadosChecklist =
-document.getElementById("corpoChecklist").innerHTML
-
-let formData = new FormData()
-
-formData.append("responsavel",
-document.getElementById("responsavel").value)
-
-formData.append("ambulancia",
-document.getElementById("ambulanciaNome").value)
-
-formData.append("data",
-document.getElementById("data").value)
-
-formData.append("hora_inicio",
-document.getElementById("horaInicio").value)
-
-formData.append("hora_final",
-document.getElementById("horaFinal").value)
-
-formData.append("dados",dadosChecklist)
-
-fetch("salvar_checklist.php",{
-method:"POST",
-body:formData
-})
-
-window.print()
-
-}
-  
 /* PROFISSIONAIS */
 
 const profissionais=[
@@ -403,7 +367,17 @@ corpo.innerHTML+=linha("Suporte para soro",1)
 }
 
 
-  
+/* IMPRIMIR */
+
+function imprimir(){
+
+document.getElementById("horaFinal").value=
+new Date().toLocaleTimeString("pt-BR")
+
+window.print()
+
+}
+
 </script>
 
 </head>
@@ -490,27 +464,12 @@ Hora Final
 
 </table>
 
-<script>
-todas as funções javascript
-
-function login(){}
-
-function selecionarAmbulancia(){}
-
-function montarChecklist(){}
-
-function imprimir(){}
-
-</script>
-  
-</div>
-
 <div class="print-btn">
 
 <button onclick="imprimir()">IMPRIMIR</button>
 
 </div>
-  
+
 </div>
 
 </div>
