@@ -211,7 +211,7 @@ corpo.innerHTML+=`<tr class="section"><td colspan="5">${nome}</td></tr>`
 
 if(tipo==="UTI"){
 
-secao("EQUIPAMENTOS E SUPORTE")
+secao(" 1. EQUIPAMENTOS E SUPORTE")
 
 corpo.innerHTML+=linha("Esfigmomanômetro Adulto",1)
 corpo.innerHTML+=linha("Esfigmomanômetro Pediátrico",1)
@@ -229,7 +229,7 @@ corpo.innerHTML+=linha("Suporte de Soro",1)
 corpo.innerHTML+=linha("Sacolas p/lixo comum",5)
 corpo.innerHTML+=linha("Sacolas p/lixo contaminado",5)
 
-secao("RESTRITO A USA")
+secao("2. RESTRITO A USA")
 
 corpo.innerHTML+=linha("Bomba de Infusão Continua (BIC)",2)
 corpo.innerHTML+=linha("Monitor Multiparametrico",1)
@@ -239,7 +239,7 @@ corpo.innerHTML+=linha("Kendrick Extrication Device (KED) UTI MAIS VIDA",1)
 corpo.innerHTML+=linha("Aspirador Portátil",1)
 corpo.innerHTML+=linha("Aspirador de parede",1)
 
-secao("VIAS AÉREAS / OXIGENOTERAPIA")
+secao("3. VIAS AÉREAS / OXIGENOTERAPIA")
 
 corpo.innerHTML+=linha("Bolsa Válvula Máscara (BVM) Adulto",1)
 corpo.innerHTML+=linha("Bolsa Válvula Máscara (BVM) Pediátrico",1)
@@ -272,7 +272,7 @@ corpo.innerHTML+=linha("Umidificador",1)
 corpo.innerHTML+=linha("Manômetro",2)
 corpo.innerHTML+=linha("Buggie",1)
 
-secao("MEDICAÇÕES")
+secao("4. MEDICAÇÕES")
 
 corpo.innerHTML+=linha("Atropina o,25mg/ml - 2ml",10)
 corpo.innerHTML+=linha("Dopamina 5mg/ml - 10ml",2)
@@ -305,7 +305,7 @@ corpo.innerHTML+=linha("Bromoprida 5mg/ml - 2ml",5)
 corpo.innerHTML+=linha("Tenoxican 20mg - PÓ",1)
 corpo.innerHTML+=linha("Omeprazol 40mg + Diluente próprio 10ml",1)
 
-secao("INSUMOS E MATERIAIS")
+secao("5. INSUMOS E MATERIAIS")
 
 corpo.innerHTML+=linha("Seringa 1ml",5)
 corpo.innerHTML+=linha("Seringa 3ml",5)
@@ -332,14 +332,14 @@ corpo.innerHTML+=linha("Cobertor / Filme Metálico",1)
 
 if(tipo==="USB"){
 
-secao("INSUMOS")
+secao("1. INSUMOS")
 
 corpo.innerHTML+=linha("Seringa 10ml",10)
 corpo.innerHTML+=linha("Seringa 20ml",10)
 corpo.innerHTML+=linha("Luva Procedimento",1)
 corpo.innerHTML+=linha("Gaze Estéril",20)
 
-secao("EQUIPAMENTOS")
+secao("2. EQUIPAMENTOS")
 
 corpo.innerHTML+=linha("Esfigmomanômetro Adulto",1)
 corpo.innerHTML+=linha("Estetoscópio",1)
@@ -356,7 +356,7 @@ corpo.innerHTML+=linha("garrote",2)
 
 if(tipo==="FIORINO"){
 
-secao("EQUIPAMENTOS")
+secao("1 EQUIPAMENTOS")
 
 corpo.innerHTML+=linha("Maca",1)
 corpo.innerHTML+=linha("Cilindro de O2",1)
@@ -430,7 +430,7 @@ Nascimento<br>
 
 <div class="checklist-box" id="checklist" style="display:none">
 
-<h1>CHECKLIST AMBULÂNCIA</h1>
+<h1>CHECKLIST AMBULÂNCIA - CASO URGÊNCIA PREENCHER APENAS 1 E 2 NA USA</h1>
 
 Responsável
 <input id="responsavel" readonly style="width:400px;">
